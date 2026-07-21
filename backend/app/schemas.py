@@ -19,3 +19,28 @@ class Shipment(BaseModel):
 
     class Config:
         from_attributes = True
+
+class ShipmentCreate(BaseModel):
+    product_name: str
+    supplier_name: str | None = None
+    warehouse: str | None = None
+    destination: str | None = None
+    transport_partner: str | None = None
+    shipment_date: date | None = None
+    expected_delivery: date | None = None
+    actual_delivery: date | None = None
+    shipment_cost: Decimal | None = None
+    shipment_status: str | None = None
+
+
+class ShipmentUpdate(BaseModel):
+    product_name: str
+    supplier_name: str | None = None
+    warehouse: str | None = None
+    destination: str | None = None
+    transport_partner: str | None = None
+    shipment_date: date | None = None
+    expected_delivery: date | None = None
+    actual_delivery: date | None = None
+    shipment_cost: Decimal | None = None
+    shipment_status: str | None = None

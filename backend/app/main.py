@@ -15,3 +15,36 @@ def home():
 @app.get("/shipments", response_model=list[schemas.Shipment])
 def get_shipments(db: Session = Depends(get_db)):
     return crud.get_shipments(db)
+
+@app.get("/shipments/{shipment_id}", response_model=schemas.Shipment)
+def get_shipment(
+    shipment_id: int,
+    db: Session = Depends(get_db)
+):
+    return crud.get_shipment(db, shipment_id)
+
+
+@app.post("/shipments", response_model=schemas.Shipment)
+def create_shipment(
+    shipment: schemas.ShipmentCreate,
+    db: Session = Depends(get_db)
+):
+    return crud.create_shipment(db, shipment)
+
+
+@app.put("/shipments/{shipment_id}", response_model=schemas.Shipment)
+def update_shipment(
+    shipment_id: int,
+    shipment: schemas.ShipmentUpdate,
+    db: Session = Depends(get_db)
+):
+    return crud.update_shipment(db, shipment_id, shipment)
+
+
+@app.delete("/shipments/{shipment_id}")
+def delete_shipment(
+    shipment_id: int,
+    db: Session = Depends(get_db)
+):
+    crud.delete_shipment(db, shipment_id)
+    return {"message": "Shipment deleted successfully"}
