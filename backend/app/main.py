@@ -13,8 +13,20 @@ def home():
 
 
 @app.get("/shipments", response_model=list[schemas.Shipment])
-def get_shipments(db: Session = Depends(get_db)):
-    return crud.get_shipments(db)
+def get_shipments(
+    status: str = None,
+    supplier: str = None,
+    destination: str = None,
+    product: str = None,
+    db: Session = Depends(get_db),
+):
+    return crud.get_shipments(
+        db,
+        status=status,
+        supplier=supplier,
+        destination=destination,
+        product=product
+    )
 
 @app.get("/shipments/{shipment_id}", response_model=schemas.Shipment)
 def get_shipment(

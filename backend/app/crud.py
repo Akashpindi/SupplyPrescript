@@ -2,8 +2,30 @@ from sqlalchemy.orm import Session
 from app import models, schemas
 
 
-def get_shipments(db: Session):
-    return db.query(models.Shipment).all()
+def get_shipments(
+    db: Session,
+    status: str = None,
+    supplier: str = None,
+    destination: str = None,
+    product: str = None,
+):
+    query = db.query(models.Shipment)
+
+    if status:
+        query = query.filter(models.Shipment.shipment_status == status)
+
+    if supplier:
+        query = query.filter(models.Shipment.supplier_name == supplier)
+
+    if destination:
+        query = query.filter(models.Shipment.destination == destination)
+    
+    if product:
+        query = query.filter(
+            models.Shipment.product_name.ilike(f"%{product}%")
+    )
+
+    return query.all()
 
 
 def get_shipment(db: Session, shipment_id: int):
