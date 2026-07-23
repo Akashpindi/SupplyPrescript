@@ -8,6 +8,8 @@ def get_shipments(
     supplier: str = None,
     destination: str = None,
     product: str = None,
+    skip: int = 0,
+    limit: int = 10,
 ):
     query = db.query(models.Shipment)
 
@@ -25,7 +27,7 @@ def get_shipments(
             models.Shipment.product_name.ilike(f"%{product}%")
     )
 
-    return query.all()
+    return query.offset(skip).limit(limit).all()
 
 
 def get_shipment(db: Session, shipment_id: int):

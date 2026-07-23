@@ -18,6 +18,8 @@ def get_shipments(
     supplier: str = None,
     destination: str = None,
     product: str = None,
+    skip: int = 0,
+    limit: int = 10,
     db: Session = Depends(get_db),
 ):
     return crud.get_shipments(
@@ -25,7 +27,9 @@ def get_shipments(
         status=status,
         supplier=supplier,
         destination=destination,
-        product=product
+        product=product,
+        skip=skip,
+        limit=limit
     )
 
 @app.get("/shipments/{shipment_id}", response_model=schemas.Shipment)
