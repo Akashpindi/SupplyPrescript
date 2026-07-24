@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -37,7 +37,15 @@ def get_shipment(
     shipment_id: int,
     db: Session = Depends(get_db)
 ):
-    return crud.get_shipment(db, shipment_id)
+    shipment = crud.get_shipment(db, shipment_id)
+
+    if shipment is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Shipment not found"
+        )
+
+    return shipment
 
 
 @app.post("/shipments", response_model=schemas.Shipment)
@@ -54,7 +62,19 @@ def update_shipment(
     shipment: schemas.ShipmentUpdate,
     db: Session = Depends(get_db)
 ):
-    return crud.update_shipment(db, shipment_id, shipment)
+    updated_shipment = crud.update_shipment(
+        db=db,
+        shipment_id=shipment_id,
+        shipment=shipment
+    )
+
+    if updated_shipment is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Shipment not found"
+        )
+
+    return updated_shipment
 
 
 @app.delete("/shipments/{shipment_id}")
@@ -62,5 +82,15 @@ def delete_shipment(
     shipment_id: int,
     db: Session = Depends(get_db)
 ):
-    crud.delete_shipment(db, shipment_id)
+    deleted_shipment = crud.delete_shipment(
+        db=db,
+        shipment_id=shipment_id
+    )
+
+    if deleted_shipment is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Shipment not found"
+        )
+
     return {"message": "Shipment deleted successfully"}
