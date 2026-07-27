@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from app import models, schemas
+from sqlalchemy import func
 
 
 def get_shipments(
@@ -69,3 +70,25 @@ def delete_shipment(db: Session, shipment_id: int):
         db.commit()
 
     return db_shipment
+
+def get_shipment_stats(db: Session):
+    total = db.query(models.Shipment).count()
+
+    delivered = db.query(models.Shipment).filter(
+        models.Shipment.shipment_status == "Delivered"
+    ).count()
+
+    in_transit = db.query(models.Shipment).filter(
+        models.Shipment.shipment_status == "In Transit"
+    ).count()
+
+    pending = db.query(models.Shipment).filter(
+        models.Shipment.shipment_status == "Pending"
+    ).count()
+
+    return {
+        "total_shipments": total,
+        "delivered": delivered,
+        "in_transit": in_transit,
+        "pending": pending,
+    }

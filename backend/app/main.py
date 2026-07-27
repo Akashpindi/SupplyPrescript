@@ -32,6 +32,12 @@ def get_shipments(
         limit=limit
     )
 
+@app.get("/shipments/stats")
+def shipment_stats(
+    db: Session = Depends(get_db)
+):
+    return crud.get_shipment_stats(db)
+
 @app.get("/shipments/{shipment_id}", response_model=schemas.Shipment)
 def get_shipment(
     shipment_id: int,
