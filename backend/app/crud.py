@@ -11,6 +11,8 @@ def get_shipments(
     product: str = None,
     skip: int = 0,
     limit: int = 10,
+    sort_by: str = None,
+    order: str = "asc",
 ):
     query = db.query(models.Shipment)
 
@@ -27,6 +29,15 @@ def get_shipments(
         query = query.filter(
             models.Shipment.product_name.ilike(f"%{product}%")
     )
+
+    if sort_by:
+        if hasattr(models.Shipment, sort_by):
+            column = getattr(models.Shipment, sort_by)
+
+            if order.lower() == "desc":
+                query = query.order_by(column.desc())
+            else:
+                query = query.order_by(column.asc())
 
     return query.offset(skip).limit(limit).all()
 

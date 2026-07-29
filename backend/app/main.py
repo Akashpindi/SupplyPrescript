@@ -20,17 +20,21 @@ def get_shipments(
     product: str = None,
     skip: int = 0,
     limit: int = 10,
+    sort_by: str = None,
+    order: str = "asc",
     db: Session = Depends(get_db),
 ):
     return crud.get_shipments(
-        db,
-        status=status,
-        supplier=supplier,
-        destination=destination,
-        product=product,
-        skip=skip,
-        limit=limit
-    )
+    db,
+    status=status,
+    supplier=supplier,
+    destination=destination,
+    product=product,
+    skip=skip,
+    limit=limit,
+    sort_by=sort_by,
+    order=order,
+)
 
 @app.get("/shipments/stats")
 def shipment_stats(
