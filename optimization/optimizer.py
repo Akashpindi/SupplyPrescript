@@ -1,7 +1,7 @@
 """
 Optimization Engine Design
 """
-
+from scipy.optimize import minimize
 from constraints import (
     MAX_SHIPMENT_COST,
     MAX_DELAY_HOURS,
@@ -25,3 +25,20 @@ class ShipmentOptimizer:
             return False, "Shipment weight exceeds allowed limit."
 
         return True, "All constraints satisfied."
+
+
+    def optimize_cost(self, cost):
+        """
+        Minimize shipment cost.
+        """
+
+        def objective(x):
+            return x[0]
+
+        result = minimize(
+            objective,
+            x0=[cost],
+            bounds=[(0, MAX_SHIPMENT_COST)]
+        )
+
+        return result.x[0]
