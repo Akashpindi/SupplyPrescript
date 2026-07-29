@@ -9,7 +9,7 @@ model = joblib.load("models/shipment_delay_model.pkl")
 st.write("Model loaded!")
 
 label_encoders = joblib.load("models/label_encoders.pkl")
-st.write("Encoders loaded!")
+st.write("Encoders loaded")
 
 # App title
 st.set_page_config(page_title="Shipment Delay Prediction", page_icon="📦")
