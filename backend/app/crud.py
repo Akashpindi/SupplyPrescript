@@ -13,6 +13,8 @@ def get_shipments(
     limit: int = 10,
     sort_by: str = None,
     order: str = "asc",
+    start_date: str = None,
+    end_date: str = None,
 ):
     query = db.query(models.Shipment)
 
@@ -29,6 +31,16 @@ def get_shipments(
         query = query.filter(
             models.Shipment.product_name.ilike(f"%{product}%")
     )
+
+    if start_date:
+        query = query.filter(
+            models.Shipment.shipment_date >= start_date
+        )
+
+    if end_date:
+        query = query.filter(
+            models.Shipment.shipment_date <= end_date
+        )
 
     if sort_by:
         if hasattr(models.Shipment, sort_by):
