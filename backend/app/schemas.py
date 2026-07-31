@@ -44,3 +44,14 @@ class ShipmentUpdate(BaseModel):
     actual_delivery: date | None = None
     shipment_cost: Decimal | None = None
     shipment_status: str | None = None
+
+
+class ShipmentListResponse(BaseModel):
+    total: int
+    skip: int
+    limit: int
+    count: int
+    data: list[Shipment]
+
+    class Config:
+        from_attributes = True

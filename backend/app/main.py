@@ -12,7 +12,7 @@ def home():
     return {"message": "SupplyPrescript API Running"}
 
 
-@app.get("/shipments", response_model=list[schemas.Shipment])
+@app.get("/shipments", response_model=schemas.ShipmentListResponse)
 def get_shipments(
     status: str = None,
     supplier: str = None,

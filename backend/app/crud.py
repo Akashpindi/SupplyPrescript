@@ -51,7 +51,17 @@ def get_shipments(
             else:
                 query = query.order_by(column.asc())
 
-    return query.offset(skip).limit(limit).all()
+    total = query.count()
+
+    shipments = query.offset(skip).limit(limit).all()
+
+    return {
+        "total": total,
+        "skip": skip,
+        "limit": limit,
+        "count": len(shipments),
+        "data": shipments
+    }
 
 
 def get_shipment(db: Session, shipment_id: int):
