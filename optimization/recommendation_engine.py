@@ -15,6 +15,15 @@ class RecommendationEngine:
         self.optimizer = ShipmentOptimizer()
 
     def recommend(self, cost, delay, weight):
+        try:
+            cost = float(cost)
+            delay = float(delay)
+            weight = float(weight)
+        except (TypeError, ValueError):
+            return {
+                "status": "Error",
+                "message": "Invalid input. Cost, delay and weight must be numeric values."
+            }
         valid, message = self.optimizer.validate_constraints(
             cost,
             delay,
