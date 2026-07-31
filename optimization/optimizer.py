@@ -33,12 +33,13 @@ class ShipmentOptimizer:
         """
 
         def objective(x):
-            return x[0]
+            return (x[0] - cost) ** 2
 
         result = minimize(
             objective,
             x0=[cost],
             bounds=[(0, MAX_SHIPMENT_COST)]
         )
+        optimized_cost = float(round(result.x[0], 2))
 
-        return result.x[0]
+        return optimized_cost
