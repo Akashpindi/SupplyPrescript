@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from app import models, schemas
-from sqlalchemy import func
+from sqlalchemy import func, or_
 
 
 def get_shipments(
@@ -9,6 +9,7 @@ def get_shipments(
     supplier: str = None,
     destination: str = None,
     product: str = None,
+    search: str = None,
     skip: int = 0,
     limit: int = 10,
     sort_by: str = None,
@@ -31,6 +32,17 @@ def get_shipments(
         query = query.filter(
             models.Shipment.product_name.ilike(f"%{product}%")
     )
+
+    if search:
+        query = query.filter(
+            or_(
+                models.Shipment.product_name.ilike(f"%{search}%"),
+                models.Shipment.supplier_name.ilike(f"%{search}%"),
+                models.Shipment.warehouse.ilike(f"%{search}%"),
+                models.Shipment.destination.ilike(f"%{search}%"),
+                models.Shipment.transport_partner.ilike(f"%{search}%")
+            )
+        )
 
     if start_date:
         query = query.filter(
