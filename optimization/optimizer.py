@@ -2,7 +2,7 @@
 Optimization Engine Design
 """
 from scipy.optimize import minimize
-from constraints import (
+from .constraints import (
     MAX_SHIPMENT_COST,
     MAX_DELAY_HOURS,
     MAX_WEIGHT_KG,

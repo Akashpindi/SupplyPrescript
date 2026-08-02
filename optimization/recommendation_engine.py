@@ -2,7 +2,7 @@
 Recommendation Engine for SupplyPrescript
 """
 
-from optimizer import ShipmentOptimizer
+from .optimizer import ShipmentOptimizer
 
 
 class RecommendationEngine:
