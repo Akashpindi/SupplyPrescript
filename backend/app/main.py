@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -16,6 +16,7 @@ def home():
 def get_shipments(
     status: str = None,
     supplier: str = None,
+    transport_partner: str = Query(None),
     destination: str = None,
     product: str = None,
     search: str = None,
@@ -33,6 +34,7 @@ def get_shipments(
     db,
     status=status,
     supplier=supplier,
+    transport_partner=transport_partner,
     destination=destination,
     product=product,
     search=search,

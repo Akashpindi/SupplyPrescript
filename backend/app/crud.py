@@ -7,6 +7,7 @@ def get_shipments(
     db: Session,
     status: str = None,
     supplier: str = None,
+    transport_partner: str = None,
     destination: str = None,
     product: str = None,
     search: str = None,
@@ -26,6 +27,11 @@ def get_shipments(
 
     if supplier:
         query = query.filter(models.Shipment.supplier_name == supplier)
+
+    if transport_partner:
+        query = query.filter(
+            models.Shipment.transport_partner == transport_partner
+        )
 
     if destination:
         query = query.filter(models.Shipment.destination == destination)
