@@ -16,6 +16,8 @@ def get_shipments(
     order: str = "asc",
     start_date: str = None,
     end_date: str = None,
+    min_cost: float = None,
+    max_cost: float = None,
 ):
     query = db.query(models.Shipment)
 
@@ -52,6 +54,16 @@ def get_shipments(
     if end_date:
         query = query.filter(
             models.Shipment.shipment_date <= end_date
+        )
+
+    if min_cost is not None:
+        query = query.filter(
+            models.Shipment.shipment_cost >= min_cost
+        )
+
+    if max_cost is not None:
+        query = query.filter(
+            models.Shipment.shipment_cost <= max_cost
         )
 
     if sort_by:

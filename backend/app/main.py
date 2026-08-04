@@ -23,6 +23,8 @@ def get_shipments(
     limit: int = 10,
     start_date: str = None,
     end_date: str = None,
+    min_cost: float = None,
+    max_cost: float = None,
     sort_by: str = None,
     order: str = "asc",
     db: Session = Depends(get_db),
@@ -38,6 +40,8 @@ def get_shipments(
     limit=limit,
     start_date=start_date,
     end_date=end_date,
+    min_cost=min_cost,
+    max_cost=max_cost,
     sort_by=sort_by,
     order=order,
 )
