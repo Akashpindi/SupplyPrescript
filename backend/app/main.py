@@ -16,6 +16,7 @@ def home():
 def get_shipments(
     status: str = None,
     supplier: str = None,
+    warehouse: str = Query(None),
     transport_partner: str = Query(None),
     destination: str = None,
     product: str = None,
@@ -34,6 +35,7 @@ def get_shipments(
     db,
     status=status,
     supplier=supplier,
+    warehouse=warehouse,
     transport_partner=transport_partner,
     destination=destination,
     product=product,
