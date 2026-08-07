@@ -19,6 +19,7 @@ def get_shipments(
     start_date: str = None,
     end_date: str = None,
     expected_delivery: str = None,
+    actual_delivery: str = None,
     min_cost: float = None,
     max_cost: float = None,
 ):
@@ -72,6 +73,11 @@ def get_shipments(
     if expected_delivery:
         query = query.filter(
             models.Shipment.expected_delivery == expected_delivery
+        )
+
+    if actual_delivery:
+        query = query.filter(
+            models.Shipment.actual_delivery == actual_delivery
         )
 
     if min_cost is not None:
