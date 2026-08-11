@@ -14,7 +14,7 @@ st.write("Encoders loadedd")
 # App title
 st.set_page_config(page_title="Shipment Delay Prediction", page_icon="📦")
 
-st.title("📦 Shipment Delay Prediction App")
+st.title("Shipment Delay Prediction App")
 st.write("Enter shipment details to predict whether the shipment will be delayed.")
 
 # User Inputs
