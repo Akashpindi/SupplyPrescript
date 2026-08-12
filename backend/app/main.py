@@ -30,9 +30,17 @@ def get_shipments(
     min_cost: float = None,
     max_cost: float = None,
     sort_by: str = Query(None),
-order: str = Query("asc", pattern="^(asc|desc)$"),
+    order: str = Query("asc", pattern="^(asc|desc)$"),
     db: Session = Depends(get_db),
 ):
+
+    if min_cost is not None and max_cost is not None and min_cost > max_cost:
+        raise HTTPException(
+            status_code=400,
+            detail="min_cost cannot be greater than max_cost"
+        )
+
+    
     return crud.get_shipments(
     db,
     status=status,
