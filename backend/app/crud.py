@@ -29,21 +29,21 @@ def get_shipments(
         query = query.filter(models.Shipment.shipment_status == status)
 
     if supplier:
-        query = query.filter(models.Shipment.supplier_name == supplier)
+        query = query.filter(models.Shipment.supplier_name.ilike(supplier))
 
     if warehouse:
         query = query.filter(
-            models.Shipment.warehouse == warehouse
+            models.Shipment.warehouse.ilike(warehouse)
         )
 
     if transport_partner:
         query = query.filter(
-            models.Shipment.transport_partner == transport_partner
+            models.Shipment.transport_partner.ilike(transport_partner)
         )
 
     if destination:
-        query = query.filter(models.Shipment.destination == destination)
-    
+        query = query.filter(models.Shipment.destination.ilike(destination))
+
     if product:
         query = query.filter(
             models.Shipment.product_name.ilike(f"%{product}%")
