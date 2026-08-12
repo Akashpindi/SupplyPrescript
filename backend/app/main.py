@@ -29,8 +29,8 @@ def get_shipments(
     actual_delivery: str = Query(None),
     min_cost: float = None,
     max_cost: float = None,
-    sort_by: str = None,
-    order: str = "asc",
+    sort_by: str = Query(None),
+order: str = Query("asc", pattern="^(asc|desc)$"),
     db: Session = Depends(get_db),
 ):
     return crud.get_shipments(
