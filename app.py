@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-st.write("App started succesfully!")
+st.write("App Started succesfully!")
 
 model = joblib.load("models/shipment_delay_model.pkl")
 st.write("Model loaded!")
