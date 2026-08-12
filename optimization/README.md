@@ -68,3 +68,9 @@ Improved Recommendations
 - Real-time monitoring
 - Dashboard analytics
 - Adaptive optimization strategy
+
+
+## Module Maintainer
+
+**Developer:** Swarit Sharma  
+**Role:** Team Leader & Optimization Module Developer
