@@ -14,7 +14,7 @@ class ClosedLoopEvaluator:
     def __init__(self):
         self.engine = RecommendationEngine()
 
-    def evaluate(self, cost, delay, weight):
+    def evaluate(self, cost, delay, weight, actual_cost=None):
         """
         Evaluate shipment recommendation.
         """
@@ -30,8 +30,20 @@ class ClosedLoopEvaluator:
                 "Optimization completed successfully. "
                 "Recommendation can be used for future shipments."
             )
+            if actual_cost is not None:
+                result["actual_cost"] = actual_cost
+                result["cost_difference"] = round(
+                    actual_cost - result["optimized_cost"],
+                    2
+                )
+
+                if actual_cost <= result["optimized_cost"]:
+                    result["evaluation"] = "Prediction Successful"
+                else:
+                    result["evaluation"] = "Prediction Needs Improvement"
+
         else:
             result["feedback"] = (
                 "Shipment rejected. Review constraints and resubmit."
-           )
+            )
         return result    
