@@ -42,6 +42,18 @@ class ClosedLoopEvaluator:
                 else:
                     result["evaluation"] = "Prediction Needs Improvement"
 
+                if actual_cost <= result["optimized_cost"]:
+                    result["roi"] = "Positive"
+                    result["savings"] = round(
+                        result["optimized_cost"] - actual_cost,
+                        2
+                    )
+                else:
+                    result["roi"] = "Negative"
+                    result["extra_cost"] = round(
+                        actual_cost - result["optimized_cost"],
+                        2
+                    )
         else:
             result["feedback"] = (
                 "Shipment rejected. Review constraints and resubmit."
